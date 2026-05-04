@@ -15,3 +15,12 @@ class EstatePropertyType(models.Model):
     def _compute_offer_count(self):
         for record in self:
             record.offer_count = len(record.offer_ids)
+
+    def action_view_offers(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Ofertas',
+            'res_model': 'estate.property.offer',
+            'view_mode': 'list',
+            'domain': [('property_type_id', '=', self.id)],
+        }
