@@ -1,68 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- VISTA LISTA -->
-    <record id="estate_property_view_list" model="ir.ui.view">
-        <field name="name">estate.property.list</field>
-        <field name="model">estate.property</field>
-        <field name="arch" type="xml">
-            <list string="Propiedades"
-                  decoration-success="state in ('offer_received', 'offer_accepted')"
-                  decoration-muted="state == 'sold'"
-                  decoration-bf="state == 'offer_accepted'">
-                <field name="name" string="Referencia"/>
-                <field name="property_type_id" string="Tipo"/>
-                <field name="city" string="Ciudad"/>
-                <field name="tag_ids" string="Etiquetas" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                <field name="bedrooms" string="Hab."/>
-                <field name="living_area" string="m²"/>
-                <field name="expected_price" string="Precio Esperado"/>
-                <field name="best_offer" string="Mejor Oferta"/>
-                <field name="selling_price" string="Precio Venta"/>
-                <field name="date_availability" string="Disponible" optional="hide"/>
-                <field name="state" string="Estado"/>
-            </list>
-        </field>
-    </record>
-
-    <!-- VISTA KANBAN -->
+    <!-- ================================================================== -->
+    <!-- VISTA KANBAN                                                        -->
+    <!-- ================================================================== -->
     <record id="estate_property_view_kanban" model="ir.ui.view">
         <field name="name">estate.property.kanban</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="property_type_id" records_draggable="false">
+            <kanban default_group_by="property_type_id" records_draggable="false"
+                    class="o_kanban_small_column">
+                <field name="id"/>
                 <field name="name"/>
+                <field name="reference"/>
+                <field name="image_128"/>
+                <field name="city"/>
+                <field name="bedrooms"/>
+                <field name="bathrooms"/>
+                <field name="living_area"/>
                 <field name="expected_price"/>
-                <field name="best_offer"/>
-                <field name="selling_price"/>
+                <field name="rental_price"/>
+                <field name="listing_type"/>
                 <field name="state"/>
                 <field name="tag_ids"/>
+                <field name="salesperson_id"/>
                 <templates>
                     <t t-name="card">
-                        <div class="oe_kanban_global_click">
+                        <!-- Imagen -->
+                        <div t-if="record.image_128.raw_value"
+                             class="o_kanban_image_fill_left d-none d-md-block"
+                             role="img"
+                             t-attf-style="background-image: url('/web/image/estate.property/#{record.id.raw_value}/image_128'); background-size: cover; background-position: center; min-height: 120px; width: 100px;">
+                        </div>
+                        <div t-else=""
+                             class="o_kanban_image_fill_left d-none d-md-block"
+                             style="background-color: #875A7B; min-height: 120px; width: 100px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa fa-home fa-3x text-white"/>
+                        </div>
+
+                        <!-- Contenido -->
+                        <div class="oe_kanban_details">
                             <div class="o_kanban_record_top">
-                                <strong class="o_kanban_record_title">
-                                    <field name="name"/>
-                                </strong>
-                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <small class="text-muted">
+                                        <field name="reference"/>
+                                    </small>
+                                </div>
+                                <field name="tag_ids" widget="many2many_tags"
+                                       options="{'color_field': 'color'}"/>
                             </div>
-                            <div>
-                                <span>Precio esperado: </span>
-                                <field name="expected_price" widget="monetary"/>
+
+                            <div class="o_kanban_record_body mt-1">
+                                <div t-if="record.city.raw_value">
+                                    <i class="fa fa-map-marker me-1 text-muted"/>
+                                    <span><field name="city"/></span>
+                                </div>
+                                <div class="mt-1">
+                                    <span t-if="record.bedrooms.raw_value">
+                                        <i class="fa fa-bed me-1 text-muted"/>
+                                        <field name="bedrooms"/>
+                                    </span>
+                                    <span t-if="record.bathrooms.raw_value" class="ms-2">
+                                        <i class="fa fa-bath me-1 text-muted"/>
+                                        <field name="bathrooms"/>
+                                    </span>
+                                    <span t-if="record.living_area.raw_value" class="ms-2">
+                                        <i class="fa fa-arrows-alt me-1 text-muted"/>
+                                        <field name="living_area"/> m²
+                                    </span>
+                                </div>
+                                <div class="mt-1 fw-bold fs-5">
+                                    <t t-if="record.listing_type.raw_value == 'rent'">
+                                        <field name="rental_price" widget="monetary"/> /mes
+                                    </t>
+                                    <t t-elif="record.listing_type.raw_value == 'sale_rent'">
+                                        <field name="expected_price" widget="monetary"/>
+                                        <small class="text-muted ms-1">o <field name="rental_price" widget="monetary"/>/mes</small>
+                                    </t>
+                                    <t t-else="">
+                                        <field name="expected_price" widget="monetary"/>
+                                    </t>
+                                </div>
                             </div>
-                            <div t-if="record.best_offer.raw_value">
-                                <span>Mejor oferta: </span>
-                                <field name="best_offer" widget="monetary"/>
-                            </div>
-                            <div t-if="record.selling_price.raw_value">
-                                <span>Precio venta: </span>
-                                <field name="selling_price" widget="monetary"/>
-                            </div>
-                            <div class="o_kanban_record_bottom mt4">
-                                <field name="state" widget="badge"
-                                    decoration-success="state in ('offer_received', 'offer_accepted')"
-                                    decoration-danger="state == 'cancelled'"
-                                    decoration-muted="state == 'sold'"/>
+
+                            <div class="o_kanban_record_bottom mt-1">
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="state" widget="badge"
+                                           decoration-success="state in ('offer_received', 'offer_accepted')"
+                                           decoration-warning="state == 'offer_accepted'"
+                                           decoration-danger="state == 'cancelled'"
+                                           decoration-muted="state == 'sold'"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="salesperson_id" widget="many2one_avatar_user"/>
+                                </div>
                             </div>
                         </div>
                     </t>
@@ -71,56 +105,175 @@
         </field>
     </record>
 
-    <!-- VISTA FORMULARIO -->
+    <!-- ================================================================== -->
+    <!-- VISTA LISTA                                                         -->
+    <!-- ================================================================== -->
+    <record id="estate_property_view_list" model="ir.ui.view">
+        <field name="name">estate.property.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <list string="Propiedades"
+                  decoration-success="state == 'offer_received'"
+                  decoration-warning="state == 'offer_accepted'"
+                  decoration-muted="state == 'sold'"
+                  decoration-danger="state == 'cancelled'"
+                  decoration-bf="state == 'offer_accepted'">
+                <field name="reference" string="Ref."/>
+                <field name="name" string="Inmueble"/>
+                <field name="property_type_id" string="Tipo"/>
+                <field name="listing_type" string="Operacion" optional="show"/>
+                <field name="city" string="Ciudad"/>
+                <field name="province" string="Provincia" optional="hide"/>
+                <field name="tag_ids" string="Etiquetas" widget="many2many_tags"
+                       options="{'color_field': 'color'}"/>
+                <field name="bedrooms" string="Hab." optional="show"/>
+                <field name="bathrooms" string="Ban." optional="hide"/>
+                <field name="living_area" string="m²" optional="show"/>
+                <field name="expected_price" string="Precio Venta" optional="show"/>
+                <field name="rental_price" string="Alquiler/mes" optional="show"/>
+                <field name="best_offer" string="Mejor Oferta" optional="show"/>
+                <field name="selling_price" string="Precio Acordado" optional="show"/>
+                <field name="energy_rating" string="Energ." optional="hide"/>
+                <field name="date_availability" string="Disponible" optional="hide"/>
+                <field name="salesperson_id" string="Agente" widget="many2one_avatar_user"
+                       optional="show"/>
+                <field name="state" string="Estado"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================================================== -->
+    <!-- VISTA FORMULARIO                                                    -->
+    <!-- ================================================================== -->
     <record id="estate_property_view_form" model="ir.ui.view">
         <field name="name">estate.property.form</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Propiedad">
                 <header>
-                    <button name="action_sold" string="Marcar como Vendida"
-                            type="object" class="btn-primary"
+                    <button name="action_sold"
+                            string="Cerrar Operacion"
+                            type="object"
+                            class="btn-primary"
                             invisible="state in ('sold', 'cancelled')"/>
-                    <button name="action_cancel" string="Cancelar"
+                    <button name="action_cancel"
+                            string="Retirar del Mercado"
                             type="object"
                             invisible="state in ('sold', 'cancelled')"/>
+                    <button name="action_set_available"
+                            string="Volver a Publicar"
+                            type="object"
+                            invisible="state != 'cancelled'"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="new,offer_received,offer_accepted,sold"/>
                 </header>
+
                 <sheet>
+                    <!-- Cintas informativas -->
+                    <widget name="web_ribbon" title="Vendido / Alquilado"
+                            bg_color="bg-success"
+                            invisible="state != 'sold'"/>
+                    <widget name="web_ribbon" title="Retirado del Mercado"
+                            bg_color="bg-danger"
+                            invisible="state != 'cancelled'"/>
+
+                    <!-- Botones estadisticos -->
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" type="object"
-                                name="action_sold" icon="fa-home"
-                                invisible="True">
+                        <button name="action_sold" type="object"
+                                class="oe_stat_button" icon="fa-money"
+                                invisible="offer_count == 0">
+                            <field name="offer_count" widget="statinfo" string="Ofertas"/>
+                        </button>
+                        <button type="action"
+                                name="%(estate_visit_action_from_property)d"
+                                class="oe_stat_button" icon="fa-calendar"
+                                context="{'default_property_id': active_id, 'search_default_property_id': active_id}">
+                            <field name="visit_count" widget="statinfo" string="Visitas"/>
                         </button>
                     </div>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name" placeholder="Referencia de la propiedad"/>
-                        </h1>
+
+                    <!-- Cabecera: imagen + titulo -->
+                    <div class="d-flex gap-3 mb-3">
+                        <div style="min-width: 128px;">
+                            <field name="image_128" widget="image"
+                                   options="{'preview_image': 'image', 'size': [128, 128]}"/>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="text-muted small">
+                                <field name="reference" readonly="1"/>
+                            </div>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name"
+                                           placeholder="Titulo del anuncio (ej: Piso luminoso en el centro)"/>
+                                </h1>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap mt-1">
+                                <field name="listing_type" widget="badge"/>
+                                <field name="property_type_id"
+                                       placeholder="Tipo de inmueble"
+                                       options="{'no_create_edit': True}"/>
+                                <field name="tag_ids" widget="many2many_tags"
+                                       options="{'color_field': 'color'}"/>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Resumen de precios y m² -->
                     <group>
-                        <group string="Clasificacion">
-                            <field name="property_type_id"/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        <group string="Precio">
+                            <field name="expected_price" widget="monetary"
+                                   invisible="listing_type == 'rent'"/>
+                            <field name="rental_price" widget="monetary"
+                                   invisible="listing_type == 'sale'"/>
+                            <field name="deposit" widget="monetary"
+                                   invisible="listing_type == 'sale'"/>
+                            <field name="best_offer" widget="monetary"
+                                   invisible="best_offer == 0"/>
+                            <field name="selling_price" widget="monetary"
+                                   invisible="selling_price == 0"/>
+                            <field name="price_per_sqm"
+                                   invisible="listing_type == 'rent' or living_area == 0"/>
                         </group>
-                        <group string="Precios">
-                            <field name="expected_price" widget="monetary"/>
-                            <field name="best_offer" widget="monetary"/>
-                            <field name="selling_price" widget="monetary"/>
+                        <group string="Resumen">
+                            <field name="living_area"/>
+                            <field name="bedrooms"/>
+                            <field name="bathrooms"/>
+                            <field name="floor"/>
+                            <field name="energy_rating"/>
                         </group>
                     </group>
 
                     <notebook>
-                        <page string="Descripcion">
+
+                        <!-- TAB: DETALLES -->
+                        <page string="Detalles del Inmueble" name="details">
                             <group>
-                                <group string="Caracteristicas">
+                                <group string="Caracteristicas Generales">
+                                    <field name="condition"/>
+                                    <field name="year_built"/>
                                     <field name="living_area"/>
+                                    <field name="usable_area"/>
+                                    <field name="total_area"/>
+                                    <field name="facades"/>
+                                </group>
+                                <group string="Habitaciones y Extras">
                                     <field name="bedrooms"/>
                                     <field name="bathrooms"/>
-                                    <field name="facades"/>
-                                    <field name="garage"/>
+                                    <field name="floor"/>
                                     <field name="elevator"/>
+                                    <field name="air_conditioning"/>
+                                    <field name="heating"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Extras Incluidos">
+                                    <field name="garage"/>
+                                    <field name="parking_spaces"
+                                           invisible="not garage"/>
+                                    <field name="storage_room"/>
+                                    <field name="terrace"/>
+                                    <field name="pool"/>
                                 </group>
                                 <group string="Jardin">
                                     <field name="garden"/>
@@ -128,47 +281,95 @@
                                     <field name="garden_orientation" invisible="not garden"/>
                                 </group>
                             </group>
-                            <field name="description" placeholder="Descripcion de la propiedad..."/>
                         </page>
 
-                        <page string="Ubicacion">
+                        <!-- TAB: UBICACION -->
+                        <page string="Ubicacion" name="location">
                             <group>
-                                <field name="street"/>
-                                <field name="city"/>
-                                <field name="zip_code"/>
-                                <field name="province"/>
+                                <group>
+                                    <field name="street"/>
+                                    <field name="city"/>
+                                    <field name="province"/>
+                                    <field name="zip_code"/>
+                                </group>
+                                <group>
+                                    <field name="date_availability"/>
+                                </group>
                             </group>
                         </page>
 
-                        <page string="Ofertas">
+                        <!-- TAB: CONDICIONES ECONOMICAS -->
+                        <page string="Condiciones Economicas" name="financial">
+                            <group>
+                                <group string="Precios y Comision">
+                                    <field name="expected_price" widget="monetary"
+                                           invisible="listing_type == 'rent'"/>
+                                    <field name="rental_price" widget="monetary"
+                                           invisible="listing_type == 'sale'"/>
+                                    <field name="deposit" widget="monetary"
+                                           invisible="listing_type == 'sale'"/>
+                                    <field name="commission"/>
+                                    <field name="commission_amount" widget="monetary"/>
+                                </group>
+                                <group string="Gastos del Inmueble">
+                                    <field name="ibi" widget="monetary"/>
+                                    <field name="community_fee" widget="monetary"/>
+                                    <field name="energy_rating"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- TAB: VISITAS -->
+                        <page string="Visitas" name="visits">
+                            <field name="visit_ids">
+                                <list string="Visitas"
+                                      decoration-success="result == 'offer_made'"
+                                      decoration-warning="result == 'interested'"
+                                      decoration-muted="result == 'not_interested'">
+                                    <field name="date" string="Fecha y Hora"/>
+                                    <field name="partner_id" string="Cliente"/>
+                                    <field name="agent_id" string="Agente"/>
+                                    <field name="duration" string="Duracion (h)"/>
+                                    <field name="result" string="Resultado"/>
+                                    <field name="notes" string="Notas" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- TAB: OFERTAS -->
+                        <page string="Ofertas" name="offers">
                             <field name="offer_ids">
                                 <list string="Ofertas"
                                       decoration-success="status == 'accepted'"
                                       decoration-danger="status == 'refused'">
-                                    <field name="price" string="Precio"/>
+                                    <field name="price" string="Precio Ofertado"/>
                                     <field name="partner_id" string="Comprador"/>
                                     <field name="validity" string="Validez (dias)"/>
-                                    <field name="date_deadline" string="Fecha Limite"/>
+                                    <field name="date_deadline" string="Caduca el"/>
                                     <field name="status" string="Estado"/>
                                     <button name="action_accept" type="object"
-                                            icon="fa-check" title="Aceptar"
+                                            icon="fa-check" title="Aceptar oferta"
                                             invisible="status != False"/>
                                     <button name="action_refuse" type="object"
-                                            icon="fa-times" title="Rechazar"
+                                            icon="fa-times" title="Rechazar oferta"
                                             invisible="status != False"/>
                                 </list>
                             </field>
                         </page>
 
-                        <page string="Informacion adicional">
+                        <!-- TAB: DESCRIPCION -->
+                        <page string="Descripcion y Notas" name="description">
                             <group>
-                                <field name="salesperson_id"/>
-                                <field name="buyer_id"/>
-                                <field name="owner_id"/>
-                                <field name="date_availability"/>
-                                <field name="total_area"/>
+                                <group string="Personas">
+                                    <field name="salesperson_id"/>
+                                    <field name="owner_id"/>
+                                    <field name="buyer_id"/>
+                                </group>
                             </group>
+                            <field name="description"
+                                   placeholder="Descripcion detallada del inmueble para el anuncio..."/>
                         </page>
+
                     </notebook>
                 </sheet>
                 <chatter/>
@@ -176,38 +377,67 @@
         </field>
     </record>
 
-    <!-- BUSCADOR -->
+    <!-- ================================================================== -->
+    <!-- VISTA BUSQUEDA                                                      -->
+    <!-- ================================================================== -->
     <record id="estate_property_view_search" model="ir.ui.view">
         <field name="name">estate.property.search</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search string="Buscar Propiedades">
-                <field name="name" string="Referencia"/>
+                <field name="name" string="Titulo / Ref." filter_domain="['|', ('name', 'ilike', self), ('reference', 'ilike', self)]"/>
                 <field name="city" string="Ciudad"/>
+                <field name="province" string="Provincia"/>
                 <field name="property_type_id" string="Tipo"/>
                 <field name="tag_ids" string="Etiquetas"/>
+                <field name="owner_id" string="Propietario"/>
+                <field name="buyer_id" string="Comprador"/>
+
+                <separator/>
                 <filter string="Disponibles" name="available"
                         domain="[('state', 'in', ('new', 'offer_received'))]"/>
-                <filter string="Con Oferta Aceptada" name="offer_accepted"
+                <filter string="Con Ofertas" name="with_offer"
+                        domain="[('state', '=', 'offer_received')]"/>
+                <filter string="Reservados" name="reserved"
                         domain="[('state', '=', 'offer_accepted')]"/>
-                <filter string="Vendidas" name="sold"
+                <filter string="Vendidos / Alquilados" name="sold"
                         domain="[('state', '=', 'sold')]"/>
+                <filter string="Retirados" name="cancelled"
+                        domain="[('state', '=', 'cancelled')]"/>
+
+                <separator/>
+                <filter string="En Venta" name="for_sale"
+                        domain="[('listing_type', 'in', ('sale', 'sale_rent'))]"/>
+                <filter string="En Alquiler" name="for_rent"
+                        domain="[('listing_type', 'in', ('rent', 'sale_rent'))]"/>
+
                 <separator/>
                 <filter string="Mis Propiedades" name="mine"
                         domain="[('salesperson_id', '=', uid)]"/>
+
                 <group expand="0" string="Agrupar por">
-                    <filter string="Tipo" name="group_type"
+                    <filter string="Tipo de Inmueble" name="group_type"
                             context="{'group_by': 'property_type_id'}"/>
+                    <filter string="Operacion" name="group_listing"
+                            context="{'group_by': 'listing_type'}"/>
                     <filter string="Estado" name="group_state"
                             context="{'group_by': 'state'}"/>
                     <filter string="Ciudad" name="group_city"
                             context="{'group_by': 'city'}"/>
+                    <filter string="Provincia" name="group_province"
+                            context="{'group_by': 'province'}"/>
+                    <filter string="Agente" name="group_agent"
+                            context="{'group_by': 'salesperson_id'}"/>
+                    <filter string="Calificacion Energetica" name="group_energy"
+                            context="{'group_by': 'energy_rating'}"/>
                 </group>
             </search>
         </field>
     </record>
 
-    <!-- ACCION -->
+    <!-- ================================================================== -->
+    <!-- ACCION PRINCIPAL                                                    -->
+    <!-- ================================================================== -->
     <record id="estate_property_action" model="ir.actions.act_window">
         <field name="name">Propiedades</field>
         <field name="res_model">estate.property</field>
@@ -215,12 +445,21 @@
         <field name="context">{'search_default_available': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Crea tu primera propiedad
+                Crea tu primer inmueble
             </p>
             <p>
-                Añade propiedades para gestionar tus inmuebles.
+                Gestiona el catalogo completo de propiedades de tu inmobiliaria.
             </p>
         </field>
+    </record>
+
+    <!-- Accion secundaria: visitas desde la propiedad -->
+    <record id="estate_visit_action_from_property" model="ir.actions.act_window">
+        <field name="name">Visitas</field>
+        <field name="res_model">estate.property.visit</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="domain">[('property_id', '=', active_id)]</field>
+        <field name="context">{'default_property_id': active_id}</field>
     </record>
 
 </odoo>

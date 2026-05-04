@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Tipos de propiedad -->
+    <record id="type_piso" model="estate.property.type">
+        <field name="name">Piso</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="type_casa" model="estate.property.type">
+        <field name="name">Casa / Chalet</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="type_duplex" model="estate.property.type">
+        <field name="name">Duplex / Triplex</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="type_atico" model="estate.property.type">
+        <field name="name">Atico</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="type_local" model="estate.property.type">
+        <field name="name">Local Comercial</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="type_oficina" model="estate.property.type">
+        <field name="name">Oficina</field>
+        <field name="sequence">60</field>
+    </record>
+    <record id="type_nave" model="estate.property.type">
+        <field name="name">Nave Industrial</field>
+        <field name="sequence">70</field>
+    </record>
+    <record id="type_terreno" model="estate.property.type">
+        <field name="name">Terreno / Solar</field>
+        <field name="sequence">80</field>
+    </record>
+    <record id="type_garaje" model="estate.property.type">
+        <field name="name">Garaje / Parking</field>
+        <field name="sequence">90</field>
+    </record>
+    <record id="type_trastero" model="estate.property.type">
+        <field name="name">Trastero</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <!-- Etiquetas -->
+    <record id="tag_reformado" model="estate.property.tag">
+        <field name="name">Reformado</field>
+        <field name="color">2</field>
+    </record>
+    <record id="tag_atico" model="estate.property.tag">
+        <field name="name">Atico</field>
+        <field name="color">1</field>
+    </record>
+    <record id="tag_terraza" model="estate.property.tag">
+        <field name="name">Terraza</field>
+        <field name="color">3</field>
+    </record>
+    <record id="tag_piscina" model="estate.property.tag">
+        <field name="name">Piscina Comunitaria</field>
+        <field name="color">4</field>
+    </record>
+    <record id="tag_parking" model="estate.property.tag">
+        <field name="name">Parking Incluido</field>
+        <field name="color">5</field>
+    </record>
+    <record id="tag_luminoso" model="estate.property.tag">
+        <field name="name">Muy Luminoso</field>
+        <field name="color">6</field>
+    </record>
+    <record id="tag_exterior" model="estate.property.tag">
+        <field name="name">Exterior</field>
+        <field name="color">7</field>
+    </record>
+    <record id="tag_obra_nueva" model="estate.property.tag">
+        <field name="name">Obra Nueva</field>
+        <field name="color">10</field>
+    </record>
+    <record id="tag_oportunidad" model="estate.property.tag">
+        <field name="name">Oportunidad</field>
+        <field name="color">9</field>
+    </record>
+    <record id="tag_vista_mar" model="estate.property.tag">
+        <field name="name">Vistas al Mar</field>
+        <field name="color">11</field>
+    </record>
+    <record id="tag_esquina" model="estate.property.tag">
+        <field name="name">Esquina</field>
+        <field name="color">0</field>
+    </record>
+    <record id="tag_bajo" model="estate.property.tag">
+        <field name="name">Bajo con Jardin</field>
+        <field name="color">8</field>
+    </record>
+
+</odoo>

@@ -11,13 +11,19 @@
               action="estate_property_action"
               sequence="10"/>
 
+    <menuitem id="estate_menu_visits"
+              name="Visitas"
+              parent="estate_menu_root"
+              action="estate_property_visit_action"
+              sequence="20"/>
+
     <menuitem id="estate_menu_config"
               name="Configuracion"
               parent="estate_menu_root"
               sequence="90"/>
 
     <menuitem id="estate_menu_config_types"
-              name="Tipos de Propiedad"
+              name="Tipos de Inmueble"
               parent="estate_menu_config"
               action="estate_property_type_action"
               sequence="10"/>
