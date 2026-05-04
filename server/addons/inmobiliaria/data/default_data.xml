@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Tipos de inmueble -->
+        <record id="type_piso" model="inmo.property.type">
+            <field name="name">Piso</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="type_casa" model="inmo.property.type">
+            <field name="name">Casa / Chalet</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="type_adosado" model="inmo.property.type">
+            <field name="name">Adosado / Pareado</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="type_atico" model="inmo.property.type">
+            <field name="name">Atico</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="type_duplex" model="inmo.property.type">
+            <field name="name">Duplex</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="type_estudio" model="inmo.property.type">
+            <field name="name">Estudio / Loft</field>
+            <field name="sequence">6</field>
+        </record>
+        <record id="type_local" model="inmo.property.type">
+            <field name="name">Local Comercial</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="type_oficina" model="inmo.property.type">
+            <field name="name">Oficina</field>
+            <field name="sequence">8</field>
+        </record>
+        <record id="type_nave" model="inmo.property.type">
+            <field name="name">Nave Industrial</field>
+            <field name="sequence">9</field>
+        </record>
+        <record id="type_solar" model="inmo.property.type">
+            <field name="name">Solar / Terreno</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Etiquetas -->
+        <record id="tag_oportunidad" model="inmo.property.tag">
+            <field name="name">Oportunidad</field>
+            <field name="color">10</field>
+        </record>
+        <record id="tag_lujo" model="inmo.property.tag">
+            <field name="name">Lujo / Premium</field>
+            <field name="color">1</field>
+        </record>
+        <record id="tag_exterior" model="inmo.property.tag">
+            <field name="name">Exterior</field>
+            <field name="color">4</field>
+        </record>
+        <record id="tag_luminoso" model="inmo.property.tag">
+            <field name="name">Muy Luminoso</field>
+            <field name="color">3</field>
+        </record>
+        <record id="tag_reformado" model="inmo.property.tag">
+            <field name="name">Reformado</field>
+            <field name="color">2</field>
+        </record>
+        <record id="tag_centrico" model="inmo.property.tag">
+            <field name="name">Centrico</field>
+            <field name="color">6</field>
+        </record>
+        <record id="tag_cerca_metro" model="inmo.property.tag">
+            <field name="name">Cerca del Metro</field>
+            <field name="color">5</field>
+        </record>
+        <record id="tag_playa" model="inmo.property.tag">
+            <field name="name">Primera Linea de Playa</field>
+            <field name="color">7</field>
+        </record>
+        <record id="tag_obra_nueva" model="inmo.property.tag">
+            <field name="name">Obra Nueva</field>
+            <field name="color">8</field>
+        </record>
+        <record id="tag_bajo_precio" model="inmo.property.tag">
+            <field name="name">Precio Reducido</field>
+            <field name="color">9</field>
+        </record>
+        <record id="tag_piscina_comun" model="inmo.property.tag">
+            <field name="name">Piscina Comunitaria</field>
+            <field name="color">11</field>
+        </record>
+        <record id="tag_garaje_incluido" model="inmo.property.tag">
+            <field name="name">Garaje Incluido</field>
+            <field name="color">12</field>
+        </record>
+
+    </data>
+</odoo>

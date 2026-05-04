@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ROOT MENU -->
+    <menuitem id="inmo_menu_root"
+              name="Inmobiliaria"
+              sequence="10"/>
+
+    <!-- PROPIEDADES -->
+    <menuitem id="inmo_menu_properties"
+              name="Propiedades"
+              parent="inmo_menu_root"
+              sequence="10"/>
+
+    <menuitem id="inmo_menu_property_list"
+              name="Inmuebles"
+              parent="inmo_menu_properties"
+              action="inmo_property_action"
+              sequence="10"/>
+
+    <menuitem id="inmo_menu_visits"
+              name="Visitas"
+              parent="inmo_menu_properties"
+              action="inmo_property_visit_action"
+              sequence="20"/>
+
+    <menuitem id="inmo_menu_offers"
+              name="Todas las Ofertas"
+              parent="inmo_menu_properties"
+              action="inmo_property_offer_action"
+              sequence="30"/>
+
+    <!-- CONFIGURACION -->
+    <menuitem id="inmo_menu_config"
+              name="Configuracion"
+              parent="inmo_menu_root"
+              sequence="90"/>
+
+    <menuitem id="inmo_menu_property_types"
+              name="Tipos de Inmueble"
+              parent="inmo_menu_config"
+              action="inmo_property_type_action"
+              sequence="10"/>
+
+    <menuitem id="inmo_menu_property_tags"
+              name="Etiquetas"
+              parent="inmo_menu_config"
+              action="inmo_property_tag_action"
+              sequence="20"/>
+
+</odoo>

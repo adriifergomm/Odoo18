@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inmo_property_user,inmo.property user,model_inmo_property,,1,1,1,1
+access_inmo_property_type_user,inmo.property.type user,model_inmo_property_type,,1,1,1,1
+access_inmo_property_tag_user,inmo.property.tag user,model_inmo_property_tag,,1,1,1,1
+access_inmo_property_offer_user,inmo.property.offer user,model_inmo_property_offer,,1,1,1,1
+access_inmo_property_visit_user,inmo.property.visit user,model_inmo_property_visit,,1,1,1,1

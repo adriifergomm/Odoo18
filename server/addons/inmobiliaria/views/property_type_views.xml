@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- LIST -->
+    <record id="inmo_property_type_view_list" model="ir.ui.view">
+        <field name="name">inmo.property.type.list</field>
+        <field name="model">inmo.property.type</field>
+        <field name="arch" type="xml">
+            <list string="Tipos de Inmueble" editable="top">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="property_count" string="Inmuebles"/>
+                <field name="offer_count" string="Ofertas"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="inmo_property_type_view_form" model="ir.ui.view">
+        <field name="name">inmo.property.type.form</field>
+        <field name="model">inmo.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de Inmueble">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_offers"
+                                class="oe_stat_button" icon="fa-handshake-o">
+                            <field string="Ofertas" name="offer_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Tipo de inmueble..."/></h1>
+                    </div>
+                    <field name="property_ids">
+                        <list string="Inmuebles">
+                            <field name="reference"/>
+                            <field name="name"/>
+                            <field name="state"/>
+                            <field name="expected_price"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="inmo_property_type_action" model="ir.actions.act_window">
+        <field name="name">Tipos de Inmueble</field>
+        <field name="res_model">inmo.property.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

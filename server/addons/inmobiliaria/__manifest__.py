@@ -1,0 +1,22 @@
+{
+    'name': 'Inmobiliaria Pro',
+    'version': '18.0.1.0.0',
+    'category': 'Real Estate',
+    'summary': 'Gestion completa de propiedades para inmobiliarias',
+    'author': 'adriifergomm',
+    'depends': ['base', 'mail'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/sequences.xml',
+        'data/default_data.xml',
+        'views/property_type_views.xml',
+        'views/property_tag_views.xml',
+        'views/property_offer_views.xml',
+        'views/property_visit_views.xml',
+        'views/property_views.xml',
+        'views/menus.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}
