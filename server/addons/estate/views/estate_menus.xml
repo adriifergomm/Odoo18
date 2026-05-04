@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="estate_menu_root"
+              name="Inmobiliaria"
+              sequence="10"/>
+
+    <menuitem id="estate_menu_properties"
+              name="Propiedades"
+              parent="estate_menu_root"
+              action="estate_property_action"
+              sequence="10"/>
+
+    <menuitem id="estate_menu_config"
+              name="Configuracion"
+              parent="estate_menu_root"
+              sequence="90"/>
+
+    <menuitem id="estate_menu_config_types"
+              name="Tipos de Propiedad"
+              parent="estate_menu_config"
+              action="estate_property_type_action"
+              sequence="10"/>
+
+    <menuitem id="estate_menu_config_tags"
+              name="Etiquetas"
+              parent="estate_menu_config"
+              action="estate_property_tag_action"
+              sequence="20"/>
+
+</odoo>

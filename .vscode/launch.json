@@ -12,7 +12,7 @@
                 "--db_port=5432",
                 "--db_user=odoo18",
                 "--db_password=odoo_pass",
-                "--addons-path=C:\\Program Files\\Odoo 18.0.20260430\\server\\odoo\\addons",
+                "--addons-path=C:\\Program Files\\Odoo 18.0.20260430\\server\\odoo\\addons,C:\\Program Files\\Odoo 18.0.20260430\\server\\addons",
                 "-p", "8069"
             ],
             "python": "C:\\Program Files\\Odoo 18.0.20260430\\python\\python.exe",
