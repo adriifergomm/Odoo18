@@ -1,0 +1,38 @@
+# Binarios e instalador
+python/
+thirdparty/
+nssm/
+vcredist/
+Uninstall.exe
+
+# Sesiones y logs
+sessions/
+server/odoo.log
+server/**/*.log
+
+# Odoo core (se descarga con el instalador oficial)
+# Solo se versiona server/addons/ con los modulos personalizados
+server/*
+!server/addons/
+server/.github/
+server/.gitignore
+server/.weblate.json
+server/.mailmap
+server/addons/.gitignore
+server/addons/.weblate.json
+
+# Cache Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.eggs/
+*.egg-info/
+
+# IDE
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini

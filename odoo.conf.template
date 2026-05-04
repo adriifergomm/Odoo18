@@ -1,0 +1,25 @@
+[options]
+addons_path = c:\program files\odoo 18.0.20260430\server\odoo\addons,c:\program files\odoo 18.0.20260430\server\addons
+admin_passwd = admin
+bin_path = C:\Program Files\Odoo 18.0.20260430\thirdparty
+data_dir = C:\Program Files\Odoo 18.0.20260430\sessions
+db_host = localhost
+db_maxconn = 64
+db_name = False
+db_password = odoo_pass
+db_port = 5432
+db_sslmode = prefer
+db_template = template0
+db_user = odoo18
+default_productivity_apps = True
+gevent_port = 8072
+http_enable = True
+http_port = 8069
+list_db = True
+log_handler = :INFO
+log_level = info
+logfile = C:\Program Files\Odoo 18.0.20260430\server\odoo.log
+max_cron_threads = 2
+server_wide_modules = base,web
+without_demo = False
+workers = None

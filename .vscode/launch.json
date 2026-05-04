@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Odoo 18: Arranque Forzado",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "C:\\Program Files\\Odoo 18.0.20260430\\server\\odoo-bin",
+            "console": "integratedTerminal",
+            "args": [
+                "--db_host=localhost",
+                "--db_port=5432",
+                "--db_user=odoo18",
+                "--db_password=odoo_pass",
+                "--addons-path=C:\\Program Files\\Odoo 18.0.20260430\\server\\odoo\\addons",
+                "-p", "8069"
+            ],
+            "python": "C:\\Program Files\\Odoo 18.0.20260430\\python\\python.exe",
+            "cwd": "C:\\Program Files\\Odoo 18.0.20260430\\server"
+        }
+    ]
+}
