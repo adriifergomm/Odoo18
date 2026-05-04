@@ -9,12 +9,14 @@ class EstatePropertyType(models.Model):
     name = fields.Char(required=True)
     sequence = fields.Integer(default=10)
     property_ids = fields.One2many('estate.property', 'property_type_id', string='Propiedades')
-    offer_ids = fields.One2many('estate.property.offer', 'property_type_id', string='Ofertas')
+    # offer_count via search_count porque property_type_id en offer es un campo related
     offer_count = fields.Integer(compute='_compute_offer_count', string='Num. Ofertas')
 
     def _compute_offer_count(self):
         for record in self:
-            record.offer_count = len(record.offer_ids)
+            record.offer_count = self.env['estate.property.offer'].search_count([
+                ('property_id.property_type_id', '=', record.id)
+            ])
 
     def action_view_offers(self):
         return {
